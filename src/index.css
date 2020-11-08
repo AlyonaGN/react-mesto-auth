@@ -7,6 +7,7 @@
 @import url(./blocks/photo-cards/photo-cards.css);
 @import url(./blocks/photo-card/photo-card.css);
 @import url(./blocks/profile/profile.css);
+@import url(./blocks/authorization/authorization.css);
 @import url(./blocks/footer/footer.css);
 
 @import url(./blocks/popup/popup.css);
