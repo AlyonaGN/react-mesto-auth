@@ -9,8 +9,10 @@ import DeleteCardPopup from './DeleteCardPopup.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
+import ProtectedRoute from './ProtectedRoute.js';
 import Login from './Login.js';
 import Register from './Register.js';
+import RegistrationResultsPopup from './RegistrationResultsPopup.js';
 import ImagePopup from './ImagePopup.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
@@ -24,6 +26,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setUser] = React.useState(null);
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggenIn] = React.useState(false);
 
   React.useEffect(() => {
     api.loadAppInfo()
@@ -121,26 +124,28 @@ function App() {
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route path="/" exact>
-            <Main onEditProfile={() => setEditProfilePopupOpen(true)}
-              onAddPlace={() => setAddPlacePopupOpen(true)}
-              onEditAvatar={() => setEditAvatarPopupOpen(true)}
-              onCardClick={function handleCardClick(card) {
-                setSelectedCard(card);
-              }}
-              cards={cards}
-              onCardLike={handleCardLike}
-              onCardDeleteClick={function handleDeleteCardClick(card) {
-                setIsDeleteCardPopupOpen(true);
-                prepareCardForDeletion(card);
-              }}
-            />
-          </Route>
+          <ProtectedRoute exact path="/" isUserLoggedIn={loggedIn} component={<Main onEditProfile={() => setEditProfilePopupOpen(true)}
+                onAddPlace={() => setAddPlacePopupOpen(true)}
+                onEditAvatar={() => setEditAvatarPopupOpen(true)}
+                onCardClick={function handleCardClick(card) {
+                  setSelectedCard(card);
+                }}
+                cards={cards}
+                onCardLike={handleCardLike}
+                onCardDeleteClick={function handleDeleteCardClick(card) {
+                  setIsDeleteCardPopupOpen(true);
+                  prepareCardForDeletion(card);
+                }} 
+              />} 
+            /> 
           <Route path="/sign-up">
             <Register/>
           </Route>
           <Route path="/sign-in">
             <Login/>
+          </Route>
+          <Route path="/infoTool">
+            <RegistrationResultsPopup/>
           </Route>
         </Switch>
         <Footer />

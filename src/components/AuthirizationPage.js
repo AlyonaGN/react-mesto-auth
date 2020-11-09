@@ -4,9 +4,9 @@ function AuthirizationPage(props) {
 
   return (
 
-    <form className ="authorization" name={`${props.name}`} onSubmit={props.onSubmit} noValidate>
+    <form className ="authentication" name={`${props.name}`} onSubmit={props.onSubmit} noValidate>
 
-        <h2 className="authorization__header">{`${props.title}`}</h2>
+        <h2 className="authentication__header">{`${props.title}`}</h2>
         
         {props.children}
 

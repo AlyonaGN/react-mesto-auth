@@ -9,6 +9,9 @@
 @import url(./__photo-caption/popup__photo-caption.css);
 @import url(./__photo-fullscreen/popup__photo-fullscreen.css);
 @import url(./__photo-card-fullscreen/popup__photo-card-fullscreen.css);
+@import url(./__window/popup__window.css);
+@import url(./__reg-picture/popup__reg-picture.css);
+@import url(./__header/_centered/popup__header_centered.css);
 
 .popup {
     display: flex;
