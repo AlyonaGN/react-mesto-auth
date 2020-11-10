@@ -1,40 +1,52 @@
 import React, { useCallback } from 'react';
-import AuthirizationPage from './AuthirizationPage.js';
+import { Link } from 'react-router-dom';
+import { ROUTES_MAP } from '../utils/routesMap.js';
+import { register } from './Authentication.js';
+import AuthenticationPage from './AuthenticationPage.js';
 
-function Register({onUpdateAuthForm}) {
+function Register({ onSubmitRegister, onSuccessfullReg}) {
 
-    const [formValues, setFormValues] = React.useState({
-        email: "",
-        password: ""
-    });
+  const [formValues, setFormValues] = React.useState({
+    email: "",
+    password: ""
+  });
 
-    const handleSubmit = useCallback((e) => {
-        e.preventDefault();
-        /* onUpdateAuthForm({
-            email: formValues.userEmail,
-            about: formValues.userPassword,
-        }); */
-    }, [onUpdateAuthForm, formValues]);
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    register(formValues.email, formValues.password)
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          onSuccessfullReg();
+        }
+      })
+      .then(() => {
+        onSubmitRegister();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [formValues, onSubmitRegister, onSuccessfullReg]);
 
-    const handleInputChange = useCallback((e) => {
-        const { name, value } = e.target;
-        setFormValues((prevState) => ({ ...prevState, [name]: value }));
-    }, [setFormValues]);
+  const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormValues((prevState) => ({ ...prevState, [name]: value }));
+  }, [setFormValues]);
 
-    return (
-        <AuthirizationPage title="Регистрация" name="signup" onSubmit={handleSubmit} >
-        <label className="authentication__input">
-          <input className="authentication__field authentication__field_email" value={formValues.userEmail} onChange={handleInputChange} type="text" name="userEmail" placeholder="Email" />
-        </label>
+  return (
+    <AuthenticationPage title="Регистрация" name="signup" onSubmit={handleSubmit} >
+      <label className="authentication__input">
+        <input className="authentication__field authentication__field_email" value={formValues.email} onChange={handleInputChange} type="text" name="email" placeholder="Email" />
+      </label>
 
-        <label className="authentication__input">
-          <input className="authentication__field authentication__field_password" value={formValues.userPassword} onChange={handleInputChange} type="password" name="userPassword" placeholder="Пароль" />
-        </label>
+      <label className="authentication__input">
+        <input className="authentication__field authentication__field_password" value={formValues.password} onChange={handleInputChange} type="password" autoComplete="on" name="password" placeholder="Пароль" />
+      </label>
 
-        <button className="authentication__submit-button" onClick={handleSubmit} name="Зарегистрироваться">Зарегистрироваться</button>
-        <span className="authentication__question-on-registration">Уже зарегистрированы? <a href="/sign-in" className="authentication__login-ref">Войти</a></span>
-      </AuthirizationPage>
-    );
+      <button className="authentication__submit-button" type="submit" name="Зарегистрироваться">Зарегистрироваться</button>
+      <span className="authentication__question-on-registration">Уже зарегистрированы? <Link to={ROUTES_MAP.SIGNIN} className="authentication__login-ref">Войти</Link></span>
+    </AuthenticationPage>
+  );
 
 }
 

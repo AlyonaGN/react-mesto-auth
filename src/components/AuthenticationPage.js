@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AuthirizationPage(props) {
+function AuthenticationPage(props) {
 
   return (
 
@@ -14,4 +14,4 @@ function AuthirizationPage(props) {
   );
 }
 
-export default AuthirizationPage;
+export default AuthenticationPage;

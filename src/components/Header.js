@@ -1,19 +1,18 @@
 import React from 'react';
-import { withRouter, Route, Switch } from 'react-router-dom';
+import { withRouter, Route, Switch, Link } from 'react-router-dom';
 import logoPath from '../images/header-logo.png';
+import { ROUTES_MAP } from '../utils/routesMap';
 
 function Header() {
-  const signinPath = "/sign-in";
-  const signupPath = "/sign-up";
 
   return (
     <Route path="*">
       <header className="header page__header">
         <img className="header__logo" src={logoPath} alt="здесь должен быть логотип, но что-то пошло не так" />
             <Switch>
-              <Route exact path="/"></Route>
-              <Route path={signinPath}><a href={signupPath} className="header__link">Регистрация</a></Route>
-              <Route path={signupPath}><a href={signinPath} className="header__link">Войти</a></Route>
+              <Route exact path={ROUTES_MAP.MAIN}></Route>
+              <Route path={ROUTES_MAP.SIGNIN}><Link to={ROUTES_MAP.SIGNUP}className="header__link">Регистрация</Link></Route>
+              <Route path={ROUTES_MAP.SIGNUP}><Link to={ROUTES_MAP.SIGNIN} className="header__link">Войти</Link></Route>
             </Switch>
       </header>
     </Route>

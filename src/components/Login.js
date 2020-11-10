@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import AuthirizationPage from './AuthirizationPage.js';
+import AuthenticationPage from './AuthenticationPage.js';
 
-function Login({onUpdateAuthForm}) {
+function Login() {
 
     const [formValues, setFormValues] = React.useState({
         email: "",
@@ -12,9 +12,9 @@ function Login({onUpdateAuthForm}) {
         e.preventDefault();
     /*     onUpdateAuthForm({
             email: formValues.userEmail,
-            about: formValues.userPassword,
+            password: formValues.userPassword,
         }); */
-    }, [onUpdateAuthForm, formValues]);
+    }, []);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
@@ -22,17 +22,17 @@ function Login({onUpdateAuthForm}) {
     }, [setFormValues]);
 
     return (
-        <AuthirizationPage title="Вход" name="login" onSubmit={handleSubmit} >
+      <AuthenticationPage title="Вход" name="login" onSubmit={handleSubmit} >
         <label className="authentication__input">
-          <input className="authentication__field authentication__field_email" value={formValues.userEmail} onChange={handleInputChange} type="text" name="userEmail" placeholder="Email" />
+          <input className="authentication__field authentication__field_email" value={formValues.email} onChange={handleInputChange} type="text" name="userEmail" placeholder="Email" />
         </label>
 
         <label className="authentication__input">
-          <input className="authentication__field authentication__field_password" value={formValues.userPassword} onChange={handleInputChange} type="password" name="userPassword" placeholder="Пароль" />
+          <input className="authentication__field authentication__field_password" value={formValues.password} onChange={handleInputChange} type="password" autoComplete="on" name="userPassword" placeholder="Пароль" />
         </label>
 
-        <button className="authentication__submit-button" onClick={handleSubmit} name="Войти">Войти</button>
-      </AuthirizationPage>
+        <button className="authentication__submit-button" type="submit" name="Войти">Войти</button>
+      </AuthenticationPage>
     );
 
 }
