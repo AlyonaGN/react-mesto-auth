@@ -9,14 +9,13 @@ export const register = (email, password) => {
         body: JSON.stringify({ password, email })
     })
         .then((response) => {
-            console.log(response);
-            try {
                 if (response.status === 201){
                   return response.json();
                 }
-              } catch(e){
-                return (e)
-            }
+                else {
+                    console.log(response);
+                    return;
+                }
         })
         .then((res) => {
             return res;

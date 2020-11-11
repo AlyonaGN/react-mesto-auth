@@ -71,8 +71,11 @@ function App() {
 
   const closeSuccessfullRegPopup = useCallback(() => {
     closeAllPopups();
-    history.push(ROUTES_MAP.SIGNIN);
-  }, [closeAllPopups, history]);
+    if (isRegistrationSuccessfull){
+      history.push(ROUTES_MAP.SIGNIN);
+    }
+    setRegistrationSuccessfull(false);
+  }, [closeAllPopups, history, isRegistrationSuccessfull]);
   
   const handleDeleteCard = useCallback(() => {
     const cardId = cardToBeDeleted.id;
@@ -134,7 +137,7 @@ function App() {
         <Header />
         <Switch>
           <Route path={ROUTES_MAP.SIGNUP}>
-            <Register onClose={closeAllPopups} onSubmitRegister={() => setRegistrationPopupOpen(true)} onSuccessfullReg={() => setRegistrationSuccessfull(true)}/>
+            <Register onClose={closeAllPopups} onSubmitRegister={() => setRegistrationPopupOpen(true)} setRegSuccessfull={() => setRegistrationSuccessfull(true)}/>
           </Route>
           <Route path={ROUTES_MAP.SIGNIN}>
             <Login/>
