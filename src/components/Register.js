@@ -12,7 +12,7 @@ function Register({ onSubmitRegister, setRegSuccessfull}) {
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    register(formValues.email, formValues.password)
+    register(formValues.password, formValues.email)
       .then((res) => {
         if (res) {
           console.log(res);

@@ -1,20 +1,33 @@
 import React, { useCallback } from 'react';
 import AuthenticationPage from './AuthenticationPage.js';
+import { login } from './Authentication.js';
 
-function Login() {
-
+function Login({handleLogin}) {
     const [formValues, setFormValues] = React.useState({
         email: "",
         password: ""
     });
 
     const handleSubmit = useCallback((e) => {
-        e.preventDefault();
-    /*     onUpdateAuthForm({
-            email: formValues.userEmail,
-            password: formValues.userPassword,
-        }); */
-    }, []);
+      e.preventDefault();
+      login(formValues.password, formValues.email)
+        .then((res) => {
+          console.log(res);   
+          if (res) {
+            console.log(res);
+            handleLogin();
+          }
+        })
+/*         .then(() => {
+          
+        }) */
+/*         .then(() => {
+          onSubmitRegister();
+        }) */
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [formValues, handleLogin]);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
@@ -24,11 +37,11 @@ function Login() {
     return (
       <AuthenticationPage title="Вход" name="login" onSubmit={handleSubmit} >
         <label className="authentication__input">
-          <input className="authentication__field authentication__field_email" value={formValues.email} onChange={handleInputChange} type="text" name="userEmail" placeholder="Email" />
+          <input className="authentication__field authentication__field_email" value={formValues.email} onChange={handleInputChange} type="text" name="email" placeholder="Email" />
         </label>
 
         <label className="authentication__input">
-          <input className="authentication__field authentication__field_password" value={formValues.password} onChange={handleInputChange} type="password" autoComplete="on" name="userPassword" placeholder="Пароль" />
+          <input className="authentication__field authentication__field_password" value={formValues.password} onChange={handleInputChange} type="password" autoComplete="on" name="password" placeholder="Пароль" />
         </label>
 
         <button className="authentication__submit-button" type="submit" name="Войти">Войти</button>
