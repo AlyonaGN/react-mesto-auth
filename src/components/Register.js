@@ -4,7 +4,7 @@ import { ROUTES_MAP } from '../utils/routesMap.js';
 import { register } from './Authentication.js';
 import AuthenticationPage from './AuthenticationPage.js';
 
-function Register({ onSubmitRegister, setRegSuccessfull}) {
+function Register({ onRegister, setRegSuccessfull}) {
   const [formValues, setFormValues] = React.useState({
     email: "",
     password: ""
@@ -20,12 +20,12 @@ function Register({ onSubmitRegister, setRegSuccessfull}) {
         }
       })
       .then(() => {
-        onSubmitRegister();
+        onRegister();
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [formValues, onSubmitRegister, setRegSuccessfull]);
+  }, [formValues, onRegister, setRegSuccessfull]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;

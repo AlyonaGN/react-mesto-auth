@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -16,7 +16,7 @@ import RegistrationResultsPopup from './RegistrationResultsPopup.js';
 import ImagePopup from './ImagePopup.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { ROUTES_MAP } from '../utils/routesMap.js';
-import { getToken } from "../utils/token";
+import { getToken, removeToken } from "../utils/token";
 import { getContent } from './Authentication.js';
 
 function App() {
@@ -97,7 +97,7 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       })
-  }, []);
+  }, [checkToken]);
 
   const handleCardLike = useCallback((card) => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -181,19 +181,24 @@ function App() {
       })
   }, [closeAllPopups]);
 
+  const handleSignout = useCallback(() => {
+    removeToken();
+    setLoggedIn(false);
+  }, []);
+
   const prepareCardForDeletion = useCallback((card) => {
     setCardToBeDeleted(card);
   }, [setCardToBeDeleted]);
 
     return (isLoading ? <span className="preloader__text">Секундочку...</span> :
       <CurrentUserContext.Provider value={currentUser}>
-          <Header email={userData.email} />
+          <Header email={userData.email} onSignout={handleSignout} />
           <Switch>
             <Route path={ROUTES_MAP.SIGNUP}>
-              <Register onClose={closeAllPopups} onSubmitRegister={() => setRegistrationPopupOpen(true)} setRegSuccessfull={() => setRegistrationSuccessfull(true)}/>
+              <Register onClose={closeAllPopups} onRegister={() => setRegistrationPopupOpen(true)} setRegSuccessfull={() => setRegistrationSuccessfull(true)}/>
             </Route>
             <Route path={ROUTES_MAP.SIGNIN}>
-              <Login handleLogin={function handleLogin() {
+              <Login onLogin={function handleLogin() {
                     setUserData(userData);
                     setLoggedIn(true);
                     history.push(ROUTES_MAP.MAIN);

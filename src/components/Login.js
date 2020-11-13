@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import AuthenticationPage from './AuthenticationPage.js';
 import { login } from './Authentication.js';
 
-function Login({handleLogin}) {
+function Login({onLogin}) {
     const [formValues, setFormValues] = React.useState({
         email: "",
         password: ""
@@ -15,19 +15,13 @@ function Login({handleLogin}) {
           console.log(res);   
           if (res) {
             console.log(res);
-            handleLogin();
+            onLogin();
           }
         })
-/*         .then(() => {
-          
-        }) */
-/*         .then(() => {
-          onSubmitRegister();
-        }) */
         .catch((err) => {
           console.log(err);
         });
-    }, [formValues, handleLogin]);
+    }, [formValues, onLogin]);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
