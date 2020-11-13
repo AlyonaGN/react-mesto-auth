@@ -6,6 +6,9 @@ npm-debug.log*
 # Dependency directory
 node_modules
 
+# Built app
+build
+
 # Optional npm cache directory
 .npm
 
