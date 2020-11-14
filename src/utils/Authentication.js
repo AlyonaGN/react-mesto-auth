@@ -1,5 +1,5 @@
-import { ROUTES_MAP } from "../utils/routesMap";
-import { setToken } from "../utils/token";
+import { ROUTES_MAP } from "./routesMap";
+import { setToken } from "./token";
 
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
@@ -23,7 +23,6 @@ export const register = (password, email) => {
         .then((res) => {
             return res;
         })
-        .catch((err) => console.log(err));
 };
 
 export const login = (password, email) => {
@@ -41,7 +40,6 @@ export const login = (password, email) => {
         return data;
       }
     })
-    .catch(err => console.log(err))
   };
   
   export const getContent = (token) => {
@@ -55,6 +53,5 @@ export const login = (password, email) => {
     .then((response) => {
         return response.json();
     })
-    .catch(err => console.log(err))
   };
   

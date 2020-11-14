@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_MAP } from '../utils/routesMap.js';
-import { register } from './Authentication.js';
 import AuthenticationPage from './AuthenticationPage.js';
 
-function Register({ onRegister, setRegSuccessfull}) {
+function Register({onRegister}) {
   const [formValues, setFormValues] = React.useState({
     email: "",
     password: ""
@@ -12,20 +11,8 @@ function Register({ onRegister, setRegSuccessfull}) {
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    register(formValues.password, formValues.email)
-      .then((res) => {
-        if (res) {
-          console.log(res);
-          setRegSuccessfull();
-        }
-      })
-      .then(() => {
-        onRegister();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [formValues, onRegister, setRegSuccessfull]);
+    onRegister(formValues.password, formValues.email);
+  }, [formValues, onRegister]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;

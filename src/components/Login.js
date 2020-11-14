@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import AuthenticationPage from './AuthenticationPage.js';
-import { login } from './Authentication.js';
 
 function Login({onLogin}) {
     const [formValues, setFormValues] = React.useState({
@@ -10,18 +9,8 @@ function Login({onLogin}) {
 
     const handleSubmit = useCallback((e) => {
       e.preventDefault();
-      login(formValues.password, formValues.email)
-        .then((res) => {
-          console.log(res);   
-          if (res) {
-            console.log(res);
-            onLogin();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [formValues, onLogin]);
+      onLogin(formValues.password, formValues.email);
+    }, [onLogin, formValues]);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;

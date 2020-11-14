@@ -58,10 +58,6 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
             profileDescriptionErrors: profileDescriptionValidationResult,
         }));
     }, [setFormValues, setErrors]);
-
-    const isUserNameInvalid = Object.values(errors.userNameErrors).some(Boolean);
-    const isDescriptionInvalid = Object.values(errors.profileDescriptionErrors).some(Boolean);
-    const isSubmitDisabled = isUserNameInvalid || isDescriptionInvalid;
  
     return (
         <PopupWithForm title="Редактировать профиль" name="profile" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} >
@@ -79,7 +75,6 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           {errors.profileDescriptionErrors.maxLength && <span className="popup__field-error">Максимальная длина описания - 200 символов</span>}
         </label>
 
-        <button disabled={isSubmitDisabled} className="popup__submit-button" onClick={handleSubmit} name="Сохранить">Сохранить</button>
       </PopupWithForm>
     );
 

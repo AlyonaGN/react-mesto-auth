@@ -17,7 +17,9 @@ import ImagePopup from './ImagePopup.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { ROUTES_MAP } from '../utils/routesMap.js';
 import { getToken, removeToken } from "../utils/token";
-import { getContent } from './Authentication.js';
+import { getContent } from '../utils/Authentication.js';
+import { login } from '../utils/Authentication.js';
+import { register } from '../utils/Authentication.js';
 
 function App() {
 
@@ -65,7 +67,6 @@ function App() {
     getContent(jwt)
       .then((res) => {
         if (res) {
-          console.log(res);
           setUserData({
             id: res.data._id,
             email: res.data.email
@@ -75,8 +76,10 @@ function App() {
       .then(() => {
         setLoggedIn(true);
         history.push(ROUTES_MAP.MAIN);
-      });
-
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }, [setLoggedIn, history]);
 
   React.useEffect(() => {
@@ -97,7 +100,7 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       })
-  }, [checkToken]);
+  }, []);
 
   const handleCardLike = useCallback((card) => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -195,14 +198,41 @@ function App() {
           <Header email={userData.email} onSignout={handleSignout} />
           <Switch>
             <Route path={ROUTES_MAP.SIGNUP}>
-              <Register onClose={closeAllPopups} onRegister={() => setRegistrationPopupOpen(true)} setRegSuccessfull={() => setRegistrationSuccessfull(true)}/>
+              <Register onClose={closeAllPopups} onRegister={
+                function handleRegister(password, email) {
+                  register(password, email)
+                  .then((res) => {
+                    if (res) {
+                      setRegistrationSuccessfull(true);
+                    }
+                  })
+                  .then(() => {
+                    setRegistrationPopupOpen(true);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+                }
+              } 
+            />
             </Route>
             <Route path={ROUTES_MAP.SIGNIN}>
-              <Login onLogin={function handleLogin() {
-                    setUserData(userData);
-                    setLoggedIn(true);
-                    history.push(ROUTES_MAP.MAIN);
-                  }}/>
+              <Login onLogin={
+                function handleLogin(password, email) {
+                    login(password, email)
+                    .then((res) => {
+                      console.log(res);   
+                      if (res) {
+                        setUserData(userData);
+                        setLoggedIn(true);
+                        history.push(ROUTES_MAP.MAIN);
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    })
+                }
+              }/>
             </Route>
             <ProtectedRoute path={ROUTES_MAP.MAIN} isUserLoggedIn={loggedIn} component={MainComponent}/>
           </Switch>

@@ -4,7 +4,7 @@ import { editProfileValidators } from '../utils/editProfileValidators.js';
 class FormsValidator {
 
     validateEditProfileNameInput(nameInputValue) {
-        let result = {}
+        const result = {};
         Object.keys(editProfileValidators.userName)
             .forEach((errorKey) => {
                 const errorResult = editProfileValidators.userName[errorKey](nameInputValue);
@@ -14,7 +14,7 @@ class FormsValidator {
     }
 
     validateEditProfileDescriptionInput(descriptionInputValue) {
-        let result = {}
+        const result = {};
         Object.keys(editProfileValidators.profileDescription)
             .forEach((errorKey) => {
                 const errorResult = editProfileValidators.profileDescription[errorKey](descriptionInputValue);
