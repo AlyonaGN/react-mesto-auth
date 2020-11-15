@@ -38,25 +38,6 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(true);
   const history = useHistory();
 
-  const MainComponent = function() {
-    return (
-      <Main 
-        onEditProfile={() => setEditProfilePopupOpen(true)}
-        onAddPlace={() => setAddPlacePopupOpen(true)}
-        onEditAvatar={() => setEditAvatarPopupOpen(true)}
-        onCardClick={function handleCardClick(card) {
-          setSelectedCard(card);
-        }}
-        cards={cards}
-        onCardLike={handleCardLike}
-        onCardDeleteClick={function handleDeleteCardClick(card) {
-          setIsDeleteCardPopupOpen(true);
-          prepareCardForDeletion(card);
-        }} 
-    />  
-    )
-  }
-
   const checkToken = useCallback(() => {
     const jwt = getToken();
 
@@ -146,7 +127,7 @@ function App() {
         closeAllPopups();
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }, [closeAllPopups, cardToBeDeleted, cards]);
 
@@ -234,7 +215,20 @@ function App() {
                 }
               }/>
             </Route>
-            <ProtectedRoute path={ROUTES_MAP.MAIN} isUserLoggedIn={loggedIn} component={MainComponent}/>
+            <ProtectedRoute path={ROUTES_MAP.MAIN} isUserLoggedIn={loggedIn} component={Main} 
+              onEditProfile={() => setEditProfilePopupOpen(true)}
+              onAddPlace={() => setAddPlacePopupOpen(true)}
+              onEditAvatar={() => setEditAvatarPopupOpen(true)}
+              onCardClick={function handleCardClick(card) {
+                setSelectedCard(card);
+              }}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardDeleteClick={function handleDeleteCardClick(card) {
+                setIsDeleteCardPopupOpen(true);
+                prepareCardForDeletion(card);
+              }
+            } />
           </Switch>
           <Footer />
   

@@ -18,7 +18,7 @@ switch(props.name){
   return (
     <div className={`popup popup_type_${props.name} ${props.isOpen && `popup_opened`}`} >
         
-        <form className ="popup__form" name={`${props.name}`} onSubmit={props.onSubmit} noValidate>
+        <form className ="popup__form" name={`${props.name}`} noValidate>
 
         <button type="button" className="popup__close-button" onClick={props.onClose}></button>
 
@@ -26,7 +26,7 @@ switch(props.name){
         
         {props.children}
 
-        <button className="popup__submit-button">{buttonName}</button>
+        <button type="button" onClick={props.onSubmit} className="popup__submit-button">{buttonName}</button>
 
         </form>
 
